@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>夜活</title>
+</head>
+<body>
+  <h2>夜活ログ入力</h2>
+  <form id="logForm">
+    <label>日付: <input type="date" name="date" required></label><br>
+    <label>店名: <input type="text" name="name" required></label><br>
+    <label>店URL: <input type="url" name="url"></label><br>
+    <label>営業終了時間: <input type="time" name="closing_time"></label><br>
+
+    <label>電源の有無:
+      <select name="power" required>
+        <option value="1">あり</option>
+        <option value="0">なし</option>
+      </select>
+    </label><br>
+
+    <label>トイレ快適さ:
+      <select name="toilet" required>
+        <option value="1">快適でない</option>
+        <option value="2">普通</option>
+        <option value="3">快適</option>
+      </select>
+    </label><br>
+
+    <label>空間快適さ:
+      <select name="space" required>
+        <option value="1">居心地悪い</option>
+        <option value="2">普通</option>
+        <option value="3">快適</option>
+      </select>
+    </label><br>
+
+    <label>混み具合:
+      <select name="crowd" required>
+        <option value="1">空いている</option>
+        <option value="2">普通</option>
+        <option value="3">混んでいる</option>
+      </select>
+    </label><br>
+
+    <label>メモ: <textarea name="memo"></textarea></label><br>
+    <label>最寄駅: <input type="text" name="station"></label><br>
+    <label>エリア1: <input type="text" name="area1"></label><br>
+    <label>エリア2: <input type="text" name="area2"></label><br>
+
+    <button type="submit">送信</button>
+  </form>
+
+  <script>
+    document.getElementById("logForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+
+  fetch("https://script.google.com/macros/s/AKfycbw1oZK4NGWBsPVG-Kn7d9rQe3ouOwsH--Bac7IQDtYcMQ2m7Y0bfaS84nJVu_T5QWBKUg/exec", {
+    method: "POST",
+    body: new URLSearchParams(formData) // ←ここがポイント
+  }).then(response => {
+    if (response.ok) {
+      alert("送信完了！");
+      e.target.reset();
+    } else {
+      alert("送信に失敗しました");
+    }
+  });
+});
+
+    // document.getElementById("logForm").addEventListener("submit", function(e) {
+    //   e.preventDefault();
+    //   const formData = new FormData(e.target);
+    //   const data = {};
+    //   formData.forEach((value, key) => data[key] = value);
+
+    //   fetch("https://script.google.com/macros/s/AKfycbyU2a7qRXMsz03ZoDGcMZF-z87euhSbcHglt1t0mj0BvEvkjK797VKL3jPr9u_r64EXAw/exec", {
+    //     method: "POST",
+    //     body: JSON.stringify(data),
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     }
+    //   }).then(response => {
+    //     if (response.ok) {
+    //       alert("送信完了！");
+    //       e.target.reset();
+    //     } else {
+    //       alert("送信に失敗しました");
+    //     }
+    //   });
+    // });
+  </script>
+</body>
+</html>
